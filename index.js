@@ -35,11 +35,9 @@ async function run() {
     app.get("/services/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
-
       const options = {
         projection: { title: 1, price: 1, img: 1, service_id: 1, },
       };
-
       const result = await serverCollection.findOne(query,options);
       res.send(result);
     });
@@ -48,6 +46,8 @@ async function run() {
 
     app.post("/bookings", async (req,res)=>{
       const booking = req.body
+      const result = await bookingsCollection.insertOne(booking)
+      res.send(result)
     })
 
     // Send a ping to confirm a successful connection
